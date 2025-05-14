@@ -93,7 +93,7 @@ where c.pcn = 123681 -- 23,063
 and c.[year] = 2024
 order by b.pcn
 
-## Issue
+## Issue a
 
 Timeout issue with the "AccountActivitySummaryGetOpenPeriodRange"
 SOAP web service script.
@@ -145,7 +145,9 @@ TB-202209_to_202309_on_10-10_GP
 
 ```bash
 pushd .. 
-cd ~/src/Reporting2/prod/k8s/secrets/lastpass
+cd ~/src/Reporting3/prod/k8s/secrets/lastpass
+# create and populate lastpass dir
+./lastpass-linamar.sh
 ./print-etc-lastpass.sh
 mysql_host=$1
 mysql_port=$2
@@ -185,7 +187,7 @@ mongo_db=$7
 
 ```bash
 pushd .
-cd ~/src/Reporting2/prod/volume/PipeLine
+cd ~/src/Reporting3/prod/volume/PipeLine
 
 "Heather Luttrell" <Heather.Luttrell@Linamar.com>
 "Dan Martin" <dan.martin@linamar.com>
