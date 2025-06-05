@@ -1,147 +1,11 @@
 # run tb
 
-## Issue
-
-If period range script is not ran before balance update script and the period range has changed in plex. Then the balance script will be retrieving records from periods that have not been deleted in the dw. The problem will not be because of the start period because that is calculated based upon the current date.  The problem will be with the end_date because that will be greater than the value in the dw that has not been updated. When the balance script tries to add records in the new end period it will fail because these records have not been deleted.
-
-script accounting_balance_append_period_range_dw_import retrieves period balance records based upon the plex table. The Plex.accounting_balance_delete_period_range @pcn = ?; SPROC delete dw balance record based upon the start and end period stored in the dw period table. So the sproc will not delete the actual end period records which were retrieved by the Plex accounting_balance_append_period_range_dw_import script.
-
-Fix: Since the balance script calls the accounting_balance_append_period_range_dw_import plex sproc the Plex.accounting_balance_delete_period_range script should take the start and end period as parameters instead assuming the period update script has ran and has updated these values in the dw period table.
-
-Util the fix is made always run the AccountingPeriodRanges script prior to running the balance or activity summary scripts.
-
-## Corner Case
-
-On 2/4/25 3 accounts were added and "AccountingYearCategoryType" added the records for 2025 and 2026 but did not add them for 2024. Will this be ok? Yes. The code to handle adding the records to the previous and end periods year using the end_open_period year's "AccountingYearCategoryType" new records was added some time ago for AccountPeriodBalanceRecreatePeriodRange. Added code to handle adding the previous periods year using the end_open_periods year's "AccountingYearCategoryType" new records.
-
-## Reporting2
-
-Tested the Reporing2 repo on 12/05/24. Removed references to mysql because I was unable to connect to mysql on reports31.
-
-## Reason for TB
-
-/*
-Accounting_account: accounting_account_DW_Import  
-
-This is used to determine the current accounts needed in the account_period_balance table. It has
-additional fields such as the category account and sub category account that are no longer supported by
-Plex. I believe the Multi-Level in the Plex Multi-Level report has to do with an account that used the
-category and sub-category account.  Not supporting the category and sub-category account linkage is
-the reason Southfield's Plex Multi-Level report does not show many of the accounts.
-
--- select count(*)
--- select*
-from accounting_v_account_e  a
-join accounting_v_category_type act -- This is the value used by the new method of configuring plex accounts.
-on a.category_type=act.category_type  -- 36,636
--- Category numbers linked to an account by the a category_account record will no longer be supported by Plex
-left outer join accounting_v_category_account_e ca  --
-on a.plexus_customer_no=ca.plexus_customer_no
-and a.account_no=ca.account_no
-left outer join accounting_v_category_e c  --
-on ca.plexus_customer_no=c.plexus_customer_no
-and ca.category_no=c.category_no
-left outer join accounting_v_category_type t -- This is the value used by the old method of configuring plex accounts.
-on c.category_type=t.category_type
--- sub category numbers linked to an account by the sub category_account record will no longer be supported by Plex
-left outer JOIN accounting_v_sub_category_account_e AS sca
---JOIN accounting_v_Sub_Category_Account_e AS SCA -- 4,204 for 123681
-ON a.plexus_customer_no = sca.plexus_customer_no
-and a.account_no = sca.account_no
-left outer join accounting_v_sub_category_e sc  --
-on sca.plexus_customer_no=sc.plexus_customer_no
-and sca.sub_category_no=sc.sub_category_no
-left outer join accounting_v_category_e c2  --
-on sc.plexus_customer_no=c2.plexus_customer_no
-and sc.category_no=c2.category_no
-left outer join accounting_v_category_type t2 -- This is another value used by the old method of configuring plex accounts.
-on c2.category_type=t2.category_type
-left outer join account_balance_start b
-on a.plexus_customer_no = b.pcn
-and a.account_key=b.account_key
-
-AccountingYearCategoryType:
-It is used to keep track of if an account is classified as an expense or revenue for each year.
-This is needed in YTD calculations which checks if an account  
-is a revenue/expense to determine whether to reset YTD values to 0 for every year.
-
-*/
-
-## Remove TB dependancy
-
-Did this on Dec 2nd in Reporting2 repo because I was no longer able to ping google.com from the Avilla K8s. I told them I was going to get rid of this cluster and try to recreate one on the linamar vlan.
-
-## Linamar change notes
-
-From Alb-utl1, 10.1.1.1 Download the TRIALBALANCE report from plex and import it into the DW
-Run Power BI report from Alb-utl4.
-
-## Idea
-
-/*
-
-* Try to find any new accounts by comparing Plex.account_period_balance to Plex.accounting_account_year_category_type
-* after the AccountingYearCategoryType.sh script and before the AccountPeriodBalanceRecreatePeriodRange.sh script
- */
-
-select top 10 b.pcn,b.account_no, c.pcn,c.[year],c.account_no
-from Plex.accounting_account_year_category_type c
-left outer join Plex.account_period_balance b
-on c.pcn = b.pcn
-and c.account_no = b.account_no
-where c.pcn = 123681 -- 23,063
-and c.[year] = 2024
-order by b.pcn
-
-## Issue a
-
-Timeout issue with the "AccountActivitySummaryGetOpenPeriodRange"
-SOAP web service script.
-20240507
-open-period range was 202403 to 202405. It worked on 202403 and 202404 but failed on 202405 the active period. I shutdown all apps on my dev system and ran again with no error. There maybe an issue when more than 2 Plex SOAP web services are called one after another. Or there maybe some issue with running the scripts while memory resources are low.
-Had this issue again on 20241004. I ran TrialBalance-test.sh with VS Code open and all the scripts uncommented and it ran until the "AccountActivitySummaryGetOpenPeriodRange" script and then it failed. I then commented out all the scripts which ran successfully the first time and ran TrialBalance-test.sh again and it completed without any issues.
-
 ## **Format of file name**
-
-## Note call to web service did not work until I stopped the MSSQL Server docker container
 
 "Heather Luttrell" <Heather.Luttrell@Linamar.com>
 TB-202402_to_202502_on_03-04_DM_HL
-TB-202311_to_202411_on_12-16_DM_HL
-TB-202310_to_202410_on_11-11_DM_HL
-TB-202310_to_202410_on_11-05_DM_HL
-TB-202310_to_202410_on_11-04_DM_HL
-TB-202309_to_202409_on_10-04_DM_HL
-TB-202308_to_202408_on_09-06_DM
-TB-202307_to_202407_on_08-08_DM
-TB-202306_to_202406_on_07-07_DM_HL
-TB-202305_to_202405_on_06-07_DM
-TB-202304_to_202404_on_05-08_DM
-TB-202304_to_202404_on_05-07_DM
-TB-202303_to_202403_on_04-05_DM
-TB-202302_to_202402_on_03-08_DM
-TB-202301_to_202401_on_02-09_DM
-TB-202301_to_202401_on_02-08B_DM
-TB-202301_to_202401_on_02-08_DM
-TB-202212_to_202312_on_01-09_DM
-TB-202212_to_202312_on_01-03_DM_LR
-TB-202211_to_202311_on_12-12_DM_LR_JS
-TB-202211_to_202311_on_12-08_DM_LR_JS
-TB-202210_to_202310_on_11-21_DM_GP_LR
-TB-202210_to_202310_on_11-20_DM_GP_LR
-TB-202210_to_202310_on_11-13_DM_GP_LR
-TB-202210_to_202310_on_11-07_DM_GP
-TB-202209_to_202309_on_10-24_DM_GP
 
-TB-202209_to_202309_on_10-18_DM_GP
-
-TB-202209_to_202309_on_10-17_DM
-TB-202209_to_202309_on_10-17_GP
-
-TB-202209_to_202309_on_10-10_DM
-TB-202209_to_202309_on_10-10_GP
-
-## install lastpass in k8s and on dev system
+## install lastpass
 
 ```bash
 pushd .. 
@@ -169,7 +33,7 @@ ls /etc/lastpass
 
 ```bash
 pushd . 
-cd ~/src/Reporting2/prod/volume
+cd ~/src/Reporting3/prod/volume
 mysql_host=$2
 mysql_port=$3
 azure_dw=$4
@@ -256,7 +120,7 @@ pip install pyodbc
 
 # If start_period_update = 1 the AccountingStartPeriodUpdate script will run
 
-./TrialBalance-test.sh "TB" "bgroves@buschegroup.com" "202402" "202502" 0 "once"
+./TrialBalance-test.sh "TB" "bgroves@buschegroup.com" "202405" "202505" 0 "once"
 ```
 
 ## run dbeaver

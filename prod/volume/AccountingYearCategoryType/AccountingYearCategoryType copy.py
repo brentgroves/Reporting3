@@ -1,12 +1,3 @@
-#!/usr/bin/env -S uv run --script
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#     "pyodbc",
-#     "mysql-connector-python",
-# ]
-# ///
-
 #!/usr/bin/env python
 
 #!/miniconda/bin/python
@@ -40,27 +31,27 @@ def print_to_stderr(*a):
 
 try:
   ret = 0
-  # pcn_list = (sys.argv[1])
-  # username = (sys.argv[2])
-  # password = (sys.argv[3])
-  # username2 = (sys.argv[4])
-  # password2 = (sys.argv[5])
-  # username3 = (sys.argv[6])
-  # password3 = (sys.argv[7])
-  # mysql_host = (sys.argv[8])
-  # mysql_port = (sys.argv[9])
-  # azure_dw = (sys.argv[10])
+  pcn_list = (sys.argv[1])
+  username = (sys.argv[2])
+  password = (sys.argv[3])
+  username2 = (sys.argv[4])
+  password2 = (sys.argv[5])
+  username3 = (sys.argv[6])
+  password3 = (sys.argv[7])
+  mysql_host = (sys.argv[8])
+  mysql_port = (sys.argv[9])
+  azure_dw = (sys.argv[10])
     
-  pcn_list = '123681,300758'
-  username = 'mg.odbcalbion'
-  password = 'Mob3xalbion'
-  username2 = 'repsys1'
-  password2 = 'WeDontSharePasswords1!'
-  username3 = 'root'
-  password3 = 'password'
-  mysql_host = 'reports31'
-  mysql_port = '30031'
-  azure_dw = '1'
+#%DEV%pcn_list = '123681,300758'
+#%DEV%username = 'mg.odbcalbion'
+#%DEV%password = 'Mob3xalbion'
+#%DEV%username2 = 'mgadmin'
+#%DEV%password2 = 'WeDontSharePasswords1!'
+#%DEV%username3 = 'root'
+#%DEV%password3 = 'password'
+#%DEV%mysql_host = 'reports31'
+#%DEV%mysql_port = '30031'
+#%DEV%azure_dw = '1'
    
   # print(f"params={params}")
   # print(f"params={params},username={username},password={password},username2={username2},password2={password2}")
