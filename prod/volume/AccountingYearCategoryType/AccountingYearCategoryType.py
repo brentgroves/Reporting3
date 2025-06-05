@@ -3,7 +3,6 @@
 # requires-python = ">=3.12"
 # dependencies = [
 #     "pyodbc",
-#     "mysql-connector-python",
 # ]
 # ///
 
@@ -16,8 +15,8 @@ import pyodbc
 from datetime import datetime
 # importing date class from datetime module
 from datetime import date
-import mysql.connector
-from mysql.connector import Error
+# import mysql.connector
+#         from mysql.connector import Error
 
 import sys 
 import os
@@ -51,7 +50,7 @@ try:
   # mysql_port = (sys.argv[9])
   # azure_dw = (sys.argv[10])
     
-  pcn_list = '123681,300758'
+  pcn_list = '123681'
   username = 'mg.odbcalbion'
   password = 'Mob3xalbion'
   username2 = 'repsys1'
@@ -71,6 +70,7 @@ try:
 
   current_time = start_time.strftime("%H:%M:%S")
   print_to_stdout(f"{current_time}")
+  print_to_stdout(f"point 1")
 
 
   # https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-1-configure-development-environment-for-pyodbc-python-development?view=sql-server-ver15
@@ -80,7 +80,11 @@ try:
   cursor = conn.cursor()
 # accounting_year_category_type_dw_import
   rowcount=cursor.execute("{call sproc300758_11728751_1999909 (?)}", pcn_list).rowcount
+  print_to_stdout(f"point 2: rowcount={rowcount}")
+
   rows = cursor.fetchall()
+  print_to_stdout(f"point 3")
+
   print_to_stdout(f"call sproc300758_11728751_1999909 - rowcount={cursor.rowcount}")
   print_to_stdout(f"call sproc300758_11728751_1999909 - messages={cursor.messages}")
   cursor.close()
@@ -95,6 +99,10 @@ try:
     i=t[:2]+t[3:] 
     insertObject.append(i)
 
+  print_to_stdout(f"point 4")
+  t = len(insertObject)
+  print_to_stdout(f"rows={t}")
+
   # creating the date object of today's date
   # https://code.google.com/archive/p/pyodbc/wikis/GettingStarted.wiki
   todays_date = date.today()
@@ -102,12 +110,18 @@ try:
   next_year = todays_date.year + 1
 
 
-  conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=mgdw')
+  conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=repsys1')
+  print_to_stdout(f"point 5")
 
   cursor2 = conn2.cursor()
+  print_to_stdout(f"point 6")
+
   del_command = f'''delete from Plex.accounting_account_year_category_type 
   where year between {this_year} and {next_year} 
   and pcn in ({pcn_list})'''
+
+  print_to_stdout(f"point 7: del_command={del_command}")
+
   # del_command = f"delete from Plex.accounting_account_year_category_type where [year] = {todays_date.year} and pcn in ({params})"
   # del_command = f"delete from Scratch.accounting_account_year_category_type where [year] = {todays_date.year} and pcn in ({params})"
   # print_to_stdout(del_command)
@@ -115,16 +129,22 @@ try:
   # https://github.com/mkleehammer/pyodbc/wiki/Cursor
   # The return value is always the cursor itself:
   rowcount=cursor2.execute(del_command).rowcount
+  print_to_stdout(f"point 8")
+
   # rowcount=cursor2.execute(txt.format(dellist = params)).rowcount
   print_to_stdout(f"{del_command} - rowcount={rowcount}")
   print_to_stdout(f"{del_command} - messages={cursor2.messages}")
   cursor2.commit()
+  print_to_stdout(f"point 9")
+
+
 
   # https://github.com/mkleehammer/pyodbc/wiki/Cursor
   # https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany
   # https://towardsdatascience.com/how-i-made-inserts-into-sql-server-100x-faster-with-pyodbc-5a0b5afdba5
   im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
   values (?,?,{this_year},?,?)''' 
+  print_to_stdout(f"point 10: im2={im2}")
 
   # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
   cursor2.fast_executemany = True
@@ -134,23 +154,26 @@ try:
 
   im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
   values (?,?,{next_year},?,?)''' 
+  print_to_stdout(f"point 11: im2={im2}")
 
   # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
   cursor2.fast_executemany = True
   cursor2.executemany(im2,insertObject)
   cursor2.commit()
+  print_to_stdout(f"point 12")
 
 
   cursor2.close()
+  print_to_stdout(f"point 20")
 
 except pyodbc.Error as ex:
   ret = 1
   error_msg = ex.args[1]
   print_to_stderr(error_msg) 
 
-except Error as e:
-  ret = 1
-  print("MySQL error: ", e)
+# except Error as e:
+#   ret = 1
+#   print("MySQL error: ", e)
 
 finally:
   end_time = datetime.now()
@@ -160,4 +183,6 @@ finally:
     conn.close()
   if 'conn2' in globals():
     conn2.close()
+  print_to_stdout(f"end point")
+ 
   sys.exit(ret)
