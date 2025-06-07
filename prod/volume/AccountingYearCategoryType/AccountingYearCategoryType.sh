@@ -9,7 +9,6 @@
 # ./AccountingYearCategoryType.py '123681,300758' "$username" "$password"
 {
   printf "\nbefore script-start"
-  # pwd
 ../misc/script-start.py 3 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
   printf "\nafter script-start"
 

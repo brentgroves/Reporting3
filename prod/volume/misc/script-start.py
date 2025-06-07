@@ -71,7 +71,6 @@ try:
     cursor.execute("{call ETL.script_start (?)}", script_key)
     print_to_stdout(f"point 2: script_key={script_key}")
     cursor.commit()
-    print_to_stdout(f"point 3: script_key={script_key}")
     cursor.close()
     
 except pyodbc.Error as ex:

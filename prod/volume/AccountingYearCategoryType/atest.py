@@ -10,17 +10,10 @@ import pyodbc
 from datetime import datetime
 # importing date class from datetime module
 from datetime import date
-# import mysql.connector
-#         from mysql.connector import Error
 
 import sys 
 import os
-# https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-3-proof-of-concept-connecting-to-sql-using-pyodbc?view=sql-server-ver16
-# https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines?view=sql-server-ver16
-# remember to source oaodbc64.sh to set env variables.
-# https://github.com/mkleehammer/pyodbc/wiki/Calling-Stored-Procedures
-# https://thepythonguru.com/fetching-records-using-fetchone-and-fetchmany/
-# https://code.google.com/archive/p/pyodbc/wikis/Cursor.wiki
+
 def print_to_stdout(*a):
     # Here a is the array holding the objects
     # passed as the argument of the function
@@ -45,10 +38,6 @@ try:
   mysql_port = '30031'
   azure_dw = '1'
    
-  # print(f"params={params}")
-  # print(f"params={params},username={username},password={password},username2={username2},password2={password2}")
-  # sys.exit(0)
-  # https://geekflare.com/calculate-time-difference-in-python/
   start_time = datetime.now()
   end_time = datetime.now()
 
@@ -56,20 +45,16 @@ try:
   print_to_stdout(f"{current_time}")
   print_to_stdout(f"point 1")
 
-  # https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-1-configure-development-environment-for-pyodbc-python-development?view=sql-server-ver15
-  # password = 'wrong' 
-  # conn = pyodbc.connect('DSN=Plex;UID=test;PWD='+ password)
   conn = pyodbc.connect('DSN=Plex;UID='+username+';PWD='+ password)
-  # https://stackoverflow.com/questions/11451101/retrieving-data-from-sql-using-pyodbc
   print_to_stdout(f"point 2")
-
   cursor = conn.cursor()
+
 # accounting_year_category_type_dw_import
   rowcount=cursor.execute("{call sproc300758_11728751_1999909 (?)}", pcn_list).rowcount
-  print_to_stdout(f"point 2: rowcount={rowcount}")
+  print_to_stdout(f"point 3: rowcount={rowcount}")
 
   rows = cursor.fetchall()
-  print_to_stdout(f"point 3")
+  print_to_stdout(f"point 4")
 
   print_to_stdout(f"call sproc300758_11728751_1999909 - rowcount={cursor.rowcount}")
   print_to_stdout(f"call sproc300758_11728751_1999909 - messages={cursor.messages}")
@@ -89,8 +74,6 @@ try:
   t = len(insertObject)
   print_to_stdout(f"rows={t}")
 
-  # creating the date object of today's date
-  # https://code.google.com/archive/p/pyodbc/wikis/GettingStarted.wiki
   todays_date = date.today()
   this_year = todays_date.year
   next_year = todays_date.year + 1
@@ -107,39 +90,26 @@ try:
 
   print_to_stdout(f"point 7: del_command={del_command}")
 
-  # del_command = f"delete from Plex.accounting_account_year_category_type where [year] = {todays_date.year} and pcn in ({params})"
-  # del_command = f"delete from Scratch.accounting_account_year_category_type where [year] = {todays_date.year} and pcn in ({params})"
-  # print_to_stdout(del_command)
-
-  # https://github.com/mkleehammer/pyodbc/wiki/Cursor
-  # The return value is always the cursor itself:
   rowcount=cursor2.execute(del_command).rowcount
   print_to_stdout(f"point 8")
 
-  # rowcount=cursor2.execute(txt.format(dellist = params)).rowcount
   print_to_stdout(f"{del_command} - rowcount={rowcount}")
   print_to_stdout(f"{del_command} - messages={cursor2.messages}")
   cursor2.commit()
   print_to_stdout(f"point 9")
 
-  # https://github.com/mkleehammer/pyodbc/wiki/Cursor
-  # https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany
-  # https://towardsdatascience.com/how-i-made-inserts-into-sql-server-100x-faster-with-pyodbc-5a0b5afdba5
   im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
   values (?,?,{this_year},?,?)''' 
   print_to_stdout(f"point 10: im2={im2}")
 
-  # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
   cursor2.fast_executemany = True
   cursor2.executemany(im2,insertObject)
-  # cursor2.executemany(im2,rows)
   cursor2.commit()
 
   im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
   values (?,?,{next_year},?,?)''' 
   print_to_stdout(f"point 11: im2={im2}")
 
-  # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
   cursor2.fast_executemany = True
   cursor2.executemany(im2,insertObject)
   cursor2.commit()
@@ -159,9 +129,13 @@ except:
   print_to_stdout(f"AccountingYearCategoryType error()")
 
 finally:
-  print_to_stdout(f"point 20")
+  print_to_stdout(f"point 30")
+  end_time = datetime.now()
+  tdelta = end_time - start_time 
+  print_to_stdout(f"total time: {tdelta}") 
   if 'conn' in globals():
     conn.close()
-  print_to_stdout(f"point 29: ret={ret}")
-  # sys.exit(1)
+  if 'conn2' in globals():
+    conn2.close()
+  print_to_stdout(f"point 39: ret={ret}")
   sys.exit(ret)
