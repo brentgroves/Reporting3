@@ -17,7 +17,7 @@ TIMEFORMAT='%R'; time ./AccountingYearCategoryType.py "$pcn_list" "$username" "$
 result=$?
 # printf "\nafter AccountingYearCategoryType.py result = $result"
 
-if [[ $result -eq 0 || $result -eq 139 ]]
+if [[ $result -eq 0 ]]
 then # if/then branch
   # printf "\nbefore script-end"
   ../misc/script-end.py 3 0 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3

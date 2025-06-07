@@ -8,23 +8,28 @@
 # printf "\ntop AccountingYearCategoryType"
 # ./AccountingYearCategoryType.py '123681,300758' "$username" "$password"
 {
-  printf "\nbefore script-start"
+  printf "\nbefore script-start:result=$result\n"
   # pwd
-../misc/script-start.py 3 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
-  printf "\nafter script-start"
+../misc/script-start.py 3 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 
+  printf "\nafter script-start:result=$result\n"
 
-TIMEFORMAT='%R'; time ./AccountingYearCategoryType.py "$pcn_list" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
+TIMEFORMAT='%R'; time ./atest.py "$pcn_list" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 
+# ./atest.py "$pcn_list" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 
+
 result=$?
-# printf "\nafter AccountingYearCategoryType.py result = $result"
+
+# TIMEFORMAT='%R'; time ./AccountingYearCategoryType.py "$pcn_list" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
+# result=$?
+printf "\nafter AccountingYearCategoryType.py result = $result\n"
 
 if [[ $result -eq 0 || $result -eq 139 ]]
 then # if/then branch
-  # printf "\nbefore script-end"
-  ../misc/script-end.py 3 0 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
+  printf "\nbefore script-end"
+  ../misc/script-end.py 3 0 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 
 else
-  ../misc/script-end.py 3 1 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
+  ../misc/script-end.py 3 1 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 
 fi
-} 2>&6 
+}  
 
 # exec 3>&- 4>&- 5>&- 6>&- 
 # exec 3<error-msg 4<dbg-msg 5<error-num 6<tm-msg 

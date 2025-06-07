@@ -37,35 +37,35 @@ def print_to_stderr(*a):
 
 try:
   ret = 0
-  pcn = (sys.argv[1])
-  username = (sys.argv[2])
-  password = (sys.argv[3])
-  username2 = (sys.argv[4])
-  password2 = (sys.argv[5])
-  username3 = (sys.argv[6])
-  password3 = (sys.argv[7])
-  username4 = (sys.argv[8])
-  password4 = (sys.argv[9])
-  mysql_host = (sys.argv[10])
-  mysql_port = (sys.argv[11])
-  azure_dw = (sys.argv[12])
-## %DEV%sys.path.insert(1, '/home/brent/src/Reporting/prod/volume/modules')   
-#   sys.path.insert(1, '/volume/modules')   
+#%PROD%pcn = (sys.argv[1])
+#%PROD%username = (sys.argv[2])
+#%PROD%password = (sys.argv[3])
+#%PROD%username2 = (sys.argv[4])
+#%PROD%password2 = (sys.argv[5])
+#%PROD%username3 = (sys.argv[6])
+#%PROD%password3 = (sys.argv[7])
+#%PROD%username4 = (sys.argv[8])
+#%PROD%password4 = (sys.argv[9])
+#%PROD%mysql_host = (sys.argv[10])
+#%PROD%mysql_port = (sys.argv[11])
+#%PROD%azure_dw = (sys.argv[12])
+#   sys.path.insert(1, '/home/brent/src/Reporting/prod/volume/modules')   
+## %PROD%sys.path.insert(1, '/volume/modules')   
 
-#%DEV%pcn = '123681'
+  pcn = '123681'
   # # pcn = '300758'
-#%DEV%username = 'mg.odbcalbion'
-#%DEV%password = 'Mob3xalbion'
-#%DEV%username2 = 'mgadmin' 
-#%DEV%password2 = 'WeDontSharePasswords1!' 
-#%DEV%username3 = 'root'
-#%DEV%password3 = 'password'
-#%DEV%username4 = 'MGEdonReportsws@plex.com'
-#%DEV%password4 = '9f45e3d-67ed-'
-#%DEV%mysql_host = 'reports31'
+  username = 'mg.odbcalbion'
+  password = 'Mob3xalbion'
+  username2 = 'mgadmin' 
+  password2 = 'WeDontSharePasswords1!' 
+  username3 = 'root'
+  password3 = 'password'
+  username4 = 'MGEdonReportsws@plex.com'
+  password4 = '9f45e3d-67ed-'
+  mysql_host = 'reports31'
   # # mysql_host = 'reports13'
-#%DEV%mysql_port = '30031'
-#%DEV%azure_dw = '1'
+  mysql_port = '30031'
+  azure_dw = '1'
 
 
   # https://geekflare.com/calculate-time-difference-in-python/
@@ -145,8 +145,8 @@ SELECT @MAX_FISCAL_PERIOD
   session.auth = HTTPBasicAuth(username4,password4)
   # session.auth = HTTPBasicAuth('MGEdonReportsws@plex.com','9f45e3d-67ed-')
 
-  client = Client(wsdl='/home/brent/src/Reporting2/prod/volume/wsdl/Plex_SOAP_prod.wsdl',transport=Transport(session=session)) # prod
-#%DEV%client = Client(wsdl='/home/brent/src/Reporting2/prod/volume/wsdl/Plex_SOAP_prod.wsdl',transport=Transport(session=session)) # stand-alone .
+#%PROD%client = Client(wsdl='/home/brent/src/Reporting2/prod/volume/wsdl/Plex_SOAP_prod.wsdl',transport=Transport(session=session)) # prod
+  client = Client(wsdl='/home/brent/src/Reporting2/prod/volume/wsdl/Plex_SOAP_prod.wsdl',transport=Transport(session=session)) # stand-alone .
   
   # https://docs.python-zeep.org/en/master/datastructures.html
   e_type = client.get_type('ns0:ExecuteDataSourceRequest')

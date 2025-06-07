@@ -5,9 +5,3 @@ $3: 202405
 $4: 202505
 $5: 0
 $6: once
-Starting: AccountingYearCategoryType
-AccountingYearCategoryType.py: 16:22:15
-AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - rowcount=-1
-AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - messages=[]
-AccountingYearCategoryType.py: fetch_time=0:00:02.832729
-AccountingYearCategoryType.py: total time: 0:00:03.021069

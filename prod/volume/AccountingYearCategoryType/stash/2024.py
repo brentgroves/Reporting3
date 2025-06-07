@@ -39,27 +39,27 @@ def print_to_stderr(*a):
 
 try:
   ret = 0
-%PROD%pcn_list = (sys.argv[1])
-%PROD%username = (sys.argv[2])
-%PROD%password = (sys.argv[3])
-%PROD%username2 = (sys.argv[4])
-%PROD%password2 = (sys.argv[5])
-%PROD%username3 = (sys.argv[6])
-%PROD%password3 = (sys.argv[7])
-%PROD%mysql_host = (sys.argv[8])
-%PROD%mysql_port = (sys.argv[9])
-%PROD%azure_dw = (sys.argv[10])
+#%PROD%pcn_list = (sys.argv[1])
+#%PROD%username = (sys.argv[2])
+#%PROD%password = (sys.argv[3])
+#%PROD%username2 = (sys.argv[4])
+#%PROD%password2 = (sys.argv[5])
+#%PROD%username3 = (sys.argv[6])
+#%PROD%password3 = (sys.argv[7])
+#%PROD%mysql_host = (sys.argv[8])
+#%PROD%mysql_port = (sys.argv[9])
+#%PROD%azure_dw = (sys.argv[10])
     
-%DEV%pcn_list = '123681'
-%DEV%username = 'mg.odbcalbion'
-%DEV%password = 'Mob3xalbion'
-%DEV%username2 = 'repsys1'
-%DEV%password2 = 'WeDontSharePasswords1!'
-%DEV%username3 = 'root'
-%DEV%password3 = 'password'
-%DEV%mysql_host = '%MYSQL_HOST%'
-%DEV%mysql_port = '%MYSQL_PORT%'
-%DEV%azure_dw = '%AZURE_DW%'
+  pcn_list = '123681'
+  username = 'mg.odbcalbion'
+  password = 'Mob3xalbion'
+  username2 = 'repsys1'
+  password2 = 'WeDontSharePasswords1!'
+  username3 = 'root'
+  password3 = 'password'
+  mysql_host = 'reports31'
+  mysql_port = '30031'
+  azure_dw = '1'
    
   # print(f"params={params}")
   # print(f"params={params},username={username},password={password},username2={username2},password2={password2}")
@@ -117,7 +117,7 @@ try:
   print_to_stdout(f"point 6")
 
   del_command = f'''delete from Plex.accounting_account_year_category_type 
-  where year between {this_year} and {next_year} 
+  where year between {2024} and {2024} 
   and pcn in ({pcn_list})'''
 
   print_to_stdout(f"point 7: del_command={del_command}")
@@ -131,7 +131,7 @@ try:
   rowcount=cursor2.execute(del_command).rowcount
   print_to_stdout(f"point 8")
 
-  # rowcount=cursor2.execute(txt.format(dellist = params)).rowcount
+  # # rowcount=cursor2.execute(txt.format(dellist = params)).rowcount
   print_to_stdout(f"{del_command} - rowcount={rowcount}")
   print_to_stdout(f"{del_command} - messages={cursor2.messages}")
   cursor2.commit()
@@ -139,28 +139,28 @@ try:
 
 
 
-  # https://github.com/mkleehammer/pyodbc/wiki/Cursor
-  # https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany
-  # https://towardsdatascience.com/how-i-made-inserts-into-sql-server-100x-faster-with-pyodbc-5a0b5afdba5
+  # # https://github.com/mkleehammer/pyodbc/wiki/Cursor
+  # # https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany
+  # # https://towardsdatascience.com/how-i-made-inserts-into-sql-server-100x-faster-with-pyodbc-5a0b5afdba5
   im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
-  values (?,?,{this_year},?,?)''' 
+  values (?,?,{2024},?,?)''' 
   print_to_stdout(f"point 10: im2={im2}")
 
-  # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
+  # # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
   cursor2.fast_executemany = True
   cursor2.executemany(im2,insertObject)
   # cursor2.executemany(im2,rows)
   cursor2.commit()
 
-  im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
-  values (?,?,{next_year},?,?)''' 
-  print_to_stdout(f"point 11: im2={im2}")
+  # im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
+  # values (?,?,{next_year},?,?)''' 
+  # print_to_stdout(f"point 11: im2={im2}")
 
-  # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
-  cursor2.fast_executemany = True
-  cursor2.executemany(im2,insertObject)
-  cursor2.commit()
-  print_to_stdout(f"point 12")
+  # # rec = [(123681,629753,'10000-000-00000','Cash - Comerica General',0,'Asset',0,'category-name-legacy','cattypeleg',0,'subcategory-name-legacy','subcattleg',0,201604)]
+  # cursor2.fast_executemany = True
+  # cursor2.executemany(im2,insertObject)
+  # cursor2.commit()
+  # print_to_stdout(f"point 12")
 
 
   cursor2.close()

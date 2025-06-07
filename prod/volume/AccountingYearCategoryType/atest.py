@@ -5,13 +5,8 @@
 #     "pyodbc",
 # ]
 # ///
-
-#!/usr/bin/env python
-
-#!/miniconda/bin/python
-#!/home/bgroves@BUSCHE-CNC.COM/anaconda3/bin/python
-# https://docs.python-zeep.org/en/master/
 import pyodbc 
+
 from datetime import datetime
 # importing date class from datetime module
 from datetime import date
@@ -38,28 +33,17 @@ def print_to_stderr(*a):
     print(os.path.basename(__file__)+':',*a, file = sys.stderr)
 
 try:
-  ret = 0
-%PROD%pcn_list = (sys.argv[1])
-%PROD%username = (sys.argv[2])
-%PROD%password = (sys.argv[3])
-%PROD%username2 = (sys.argv[4])
-%PROD%password2 = (sys.argv[5])
-%PROD%username3 = (sys.argv[6])
-%PROD%password3 = (sys.argv[7])
-%PROD%mysql_host = (sys.argv[8])
-%PROD%mysql_port = (sys.argv[9])
-%PROD%azure_dw = (sys.argv[10])
-    
-%DEV%pcn_list = '123681'
-%DEV%username = 'mg.odbcalbion'
-%DEV%password = 'Mob3xalbion'
-%DEV%username2 = 'repsys1'
-%DEV%password2 = 'WeDontSharePasswords1!'
-%DEV%username3 = 'root'
-%DEV%password3 = 'password'
-%DEV%mysql_host = '%MYSQL_HOST%'
-%DEV%mysql_port = '%MYSQL_PORT%'
-%DEV%azure_dw = '%AZURE_DW%'
+  ret = 2
+  pcn_list = '123681'
+  username = 'mg.odbcalbion'
+  password = 'Mob3xalbion'
+  username2 = 'repsys1'
+  password2 = 'WeDontSharePasswords1!'
+  username3 = 'root'
+  password3 = 'password'
+  mysql_host = 'reports31'
+  mysql_port = '30031'
+  azure_dw = '1'
    
   # print(f"params={params}")
   # print(f"params={params},username={username},password={password},username2={username2},password2={password2}")
@@ -72,11 +56,13 @@ try:
   print_to_stdout(f"{current_time}")
   print_to_stdout(f"point 1")
 
-
   # https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-1-configure-development-environment-for-pyodbc-python-development?view=sql-server-ver15
   # password = 'wrong' 
+  # conn = pyodbc.connect('DSN=Plex;UID=test;PWD='+ password)
   conn = pyodbc.connect('DSN=Plex;UID='+username+';PWD='+ password)
   # https://stackoverflow.com/questions/11451101/retrieving-data-from-sql-using-pyodbc
+  print_to_stdout(f"point 2")
+
   cursor = conn.cursor()
 # accounting_year_category_type_dw_import
   rowcount=cursor.execute("{call sproc300758_11728751_1999909 (?)}", pcn_list).rowcount
@@ -109,7 +95,6 @@ try:
   this_year = todays_date.year
   next_year = todays_date.year + 1
 
-
   conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=repsys1')
   print_to_stdout(f"point 5")
 
@@ -136,8 +121,6 @@ try:
   print_to_stdout(f"{del_command} - messages={cursor2.messages}")
   cursor2.commit()
   print_to_stdout(f"point 9")
-
-
 
   # https://github.com/mkleehammer/pyodbc/wiki/Cursor
   # https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany
@@ -171,18 +154,14 @@ except pyodbc.Error as ex:
   error_msg = ex.args[1]
   print_to_stderr(error_msg) 
 
-# except Error as e:
-#   ret = 1
-#   print("MySQL error: ", e)
+except:
+  ret = 2
+  print_to_stdout(f"AccountingYearCategoryType error()")
 
 finally:
-  end_time = datetime.now()
-  tdelta = end_time - start_time 
-  print_to_stdout(f"total time: {tdelta}") 
+  print_to_stdout(f"point 20")
   if 'conn' in globals():
     conn.close()
-  if 'conn2' in globals():
-    conn2.close()
-  print_to_stdout(f"end point")
- 
+  print_to_stdout(f"point 29: ret={ret}")
+  # sys.exit(1)
   sys.exit(ret)

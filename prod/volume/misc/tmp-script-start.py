@@ -1,3 +1,11 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "pyodbc",
+# ]
+# ///
+
 #!/usr/bin/env python
 
 #!/miniconda/bin/python # for docker image
@@ -7,8 +15,6 @@
 import pyodbc 
 from datetime import datetime
 import sys 
-import mysql.connector
-from mysql.connector import Error
 
 import os
 # https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-3-proof-of-concept-connecting-to-sql-using-pyodbc?view=sql-server-ver16
@@ -39,7 +45,7 @@ try:
 %PROD%azure_dw = (sys.argv[8])
 
 %DEV%script_key = '4'
-%DEV%username = 'mgadmin'
+%DEV%username = 'repsys1'
 %DEV%password = 'WeDontSharePasswords1!'
 %DEV%username2 = 'root'
 %DEV%password2 = 'password'    # print(f"params={params}")
@@ -57,47 +63,31 @@ try:
 
   if '1'==azure_dw:
     # https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-1-configure-development-environment-for-pyodbc-python-development?view=sql-server-ver15
-    conn = pyodbc.connect('DSN=dw;UID='+username+';PWD='+ password + ';DATABASE=mgdw')
+    conn = pyodbc.connect('DSN=repsys1;UID='+username+';PWD='+ password + ';DATABASE=repsys1')
+    print_to_stdout(f"point 1")
 
     # https://stackoverflow.com/questions/11451101/retrieving-data-from-sql-using-pyodbc
     cursor = conn.cursor()
     cursor.execute("{call ETL.script_start (?)}", script_key)
+    print_to_stdout(f"point 2: script_key={script_key}")
     cursor.commit()
     cursor.close()
     
-  conn2 = mysql.connector.connect(user=username2, password=password2,
-                          host=mysql_host,
-                          port=mysql_port,
-                          database='ETL')
-  cursor2 = conn2.cursor()
-  # cursor2.callproc('get_laptop', [1, ])
-  cursor2.callproc('script_start', [script_key])
-  # https://mysqlcode.com/call-mysql-stored-procedure-in-python/
-  # cursor2.callproc('ETL.script_start', ["1"])
-  # cursor2.execute("{call ETL.script_start (?)}", script_key)
-  conn2.commit()
-  cursor2.close()
-
 except pyodbc.Error as ex:
   ret = 1
   error_msg = ex.args[1]
   print_to_stderr(error_msg) 
-
-except Error as e:
-  ret = 1
-  print("MySQL error: ", e)
 
 except BaseException as error:
   ret = 1
   print('An exception occurred: {}'.format(error))
 
 finally:
+  print_to_stdout(f"point 10")
   end_time = datetime.now()
   tdelta = end_time - start_time 
   print_to_stdout(f"total time: {tdelta}") 
   if 'conn' in globals():
     conn.close()
-  if 'conn2' in globals():
-    if conn2.is_connected():
-      conn2.close()
+  print_to_stdout(f"point 99")
   sys.exit(ret)

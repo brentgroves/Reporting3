@@ -39,16 +39,16 @@ def print_to_stderr(*a):
 
 try:
   ret = 0
-  # pcn_list = (sys.argv[1])
-  # username = (sys.argv[2])
-  # password = (sys.argv[3])
-  # username2 = (sys.argv[4])
-  # password2 = (sys.argv[5])
-  # username3 = (sys.argv[6])
-  # password3 = (sys.argv[7])
-  # mysql_host = (sys.argv[8])
-  # mysql_port = (sys.argv[9])
-  # azure_dw = (sys.argv[10])
+#%PROD%pcn_list = (sys.argv[1])
+#%PROD%username = (sys.argv[2])
+#%PROD%password = (sys.argv[3])
+#%PROD%username2 = (sys.argv[4])
+#%PROD%password2 = (sys.argv[5])
+#%PROD%username3 = (sys.argv[6])
+#%PROD%password3 = (sys.argv[7])
+#%PROD%mysql_host = (sys.argv[8])
+#%PROD%mysql_port = (sys.argv[9])
+#%PROD%azure_dw = (sys.argv[10])
     
   pcn_list = '123681'
   username = 'mg.odbcalbion'

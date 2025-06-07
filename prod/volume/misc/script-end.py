@@ -1,3 +1,11 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "pyodbc",
+# ]
+# ///
+
 #!/usr/bin/env python
 
 #!/miniconda/bin/python 
@@ -7,8 +15,6 @@
 import pyodbc 
 from datetime import datetime
 import sys 
-import mysql.connector
-from mysql.connector import Error
 
 import os
 # https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-3-proof-of-concept-connecting-to-sql-using-pyodbc?view=sql-server-ver16
@@ -29,25 +35,25 @@ def print_to_stderr(*a):
     print(os.path.basename(__file__)+':',*a, file = sys.stderr)
 
 try:
-  script_key = (sys.argv[1])
-  error_bit = int((sys.argv[2])) # need an integer for mysql call
-  username = (sys.argv[3])
-  password = (sys.argv[4])
-  username2 = (sys.argv[5])
-  password2 = (sys.argv[6])
-  mysql_host = (sys.argv[7])
-  mysql_port = (sys.argv[8])
-  azure_dw = (sys.argv[9])
+#%PROD%script_key = (sys.argv[1])
+#%PROD%error_bit = int((sys.argv[2])) # need an integer for mysql call
+#%PROD%username = (sys.argv[3])
+#%PROD%password = (sys.argv[4])
+#%PROD%username2 = (sys.argv[5])
+#%PROD%password2 = (sys.argv[6])
+#%PROD%mysql_host = (sys.argv[7])
+#%PROD%mysql_port = (sys.argv[8])
+#%PROD%azure_dw = (sys.argv[9])
 
-#%DEV%script_key = '4'
-#%DEV%error_bit = int('0')
-#%DEV%username = 'mgadmin'
-#%DEV%password = 'WeDontSharePasswords1!'
-#%DEV%username2 = 'root'
-#%DEV%password2 = 'password'    # print(f"params={params}")
-#%DEV%mysql_host = 'reports31'
-#%DEV%mysql_port = '30031'
-#%DEV%azure_dw = '1'
+  script_key = '4'
+  error_bit = int('0')
+  username = 'repsys1'
+  password = 'WeDontSharePasswords1!'
+  username2 = 'root'
+  password2 = 'password'    # print(f"params={params}")
+  mysql_host = 'reports31'
+  mysql_port = '30031'
+  azure_dw = '1'
 
   ret = 0
   # https://geekflare.com/calculate-time-difference-in-python/
@@ -59,27 +65,16 @@ try:
 
   if '1'==azure_dw:
     # https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-1-configure-development-environment-for-pyodbc-python-development?view=sql-server-ver15
-    conn = pyodbc.connect('DSN=dw;UID='+username+';PWD='+ password + ';DATABASE=mgdw')
+    conn = pyodbc.connect('DSN=repsys1;UID='+username+';PWD='+ password + ';DATABASE=repsys1')
+    print_to_stdout(f"point 1")
 
     # https://stackoverflow.com/questions/11451101/retrieving-data-from-sql-using-pyodbc
     cursor = conn.cursor()
     cursor.execute("{call ETL.script_end (?,?)}", script_key,error_bit)
+    print_to_stdout(f"point 2: script_key={script_key}")
+
     cursor.commit()
     cursor.close()
-
-  conn2 = mysql.connector.connect(user=username2, password=password2,
-                          host=mysql_host,
-                          port=mysql_port,
-                          database='ETL')
-
-  cursor2 = conn2.cursor()
-  # cursor2.callproc('get_laptop', [1, ])
-  cursor2.callproc('script_end', [script_key,error_bit])
-  # https://mysqlcode.com/call-mysql-stored-procedure-in-python/
-  # cursor2.callproc('ETL.script_start', ["1"])
-  # cursor2.execute("{call ETL.script_start (?)}", script_key)
-  conn2.commit()
-  cursor2.close()
 
 
 except pyodbc.Error as ex:
@@ -87,21 +82,16 @@ except pyodbc.Error as ex:
   error_msg = ex.args[1]
   print_to_stderr(error_msg) 
 
-except Error as e:
-  ret = 1
-  print("MySQL error: ", e)
-
 except BaseException as error:
   ret = 1
   print('An exception occurred: {}'.format(error))
 
 finally:
+  print_to_stdout(f"point 10")
   end_time = datetime.now()
   tdelta = end_time - start_time 
   print_to_stdout(f"total time: {tdelta}") 
   if 'conn' in globals():
     conn.close()
-  if 'conn2' in globals():
-    if conn2.is_connected():
-      conn2.close()
+  print_to_stdout(f"point 99")
   sys.exit(ret)
