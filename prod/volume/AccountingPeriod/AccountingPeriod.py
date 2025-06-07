@@ -48,13 +48,17 @@ try:
 
   current_time = start_time.strftime("%H:%M:%S")
   print_to_stdout(f"Current Time: {current_time}")
+  print_to_stdout(f"point 1")
 
   conn = pyodbc.connect('DSN=Plex;UID='+username+';PWD='+ password)
   cursor = conn.cursor()
+  print_to_stdout(f"point 2")
+
   # accounting_period_dw_import
   cursor.execute("{call sproc300758_11728751_2059406 (?)}", pcn_list)
+  print_to_stdout(f"point 3")
   rows = cursor.fetchall()
-  
+  print_to_stdout(f"point 4")
   cursor.close()
 
   fetch_time = datetime.now()
@@ -77,7 +81,10 @@ try:
       rows[i][9]=ts
     i += 1
 
+  print_to_stdout(f"accounts={length}") 
+
   conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=repsys1')
+  print_to_stdout(f"point 5")
   cursor2 = conn2.cursor()
 
   del_command = f"delete from Plex.accounting_period where pcn in ({pcn_list}) and ordinal = 0"
@@ -86,6 +93,7 @@ try:
   print_to_stdout(f"{del_command} - rowcount={rowcount}")
   print_to_stdout(f"{del_command} - messages={cursor2.messages}")
   cursor2.commit()
+  print_to_stdout(f"point 6")
 
   # set the newest records to the previous records.
   update_command = f"update Plex.accounting_period set ordinal=0 where pcn in ({pcn_list}) and ordinal = 1"
@@ -93,6 +101,7 @@ try:
   print_to_stdout(f"{update_command} - rowcount={rowcount}")
   print_to_stdout(f"{update_command} - messages={cursor2.messages}")
   cursor2.commit()
+  print_to_stdout(f"point 7")
 
   im2='''insert into Plex.accounting_period (pcn,period_key,period,period_display,fiscal_order,quarter_group,begin_date,end_date,period_status,add_date,update_date,ordinal) 
           values (?,?,?,?,?,?,?,?,?,?,?,1)''' 
@@ -101,6 +110,7 @@ try:
   cursor2.executemany(im2,rows)
   cursor2.commit()
   cursor2.close()
+  print_to_stdout(f"point 8")
 
 except pyodbc.Error as ex:
   ret = 1
@@ -113,6 +123,7 @@ except Exception as e:
   print_to_stderr(e) 
 
 finally:
+  print_to_stdout(f"point 10")
   end_time = datetime.now()
   tdelta = end_time - start_time 
   print_to_stdout(f"total time: {tdelta}") 
@@ -120,4 +131,5 @@ finally:
     conn.close()
   if 'conn2' in globals():
     conn2.close()
+  print_to_stdout(f"point 11:ret={ret}")
   sys.exit(ret)
