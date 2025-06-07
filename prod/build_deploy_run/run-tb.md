@@ -56,68 +56,9 @@ cd ~/src/Reporting3/prod/volume/PipeLine
 "Heather Luttrell" <Heather.Luttrell@Linamar.com>
 "Dan Martin" <dan.martin@linamar.com>
 TB-202402_to_202502_on_03-04_DM_HL
-TB-202401_to_202501_on_02-04_DM_HL
-TB-202312_to_202412_on_01-08_DM_HL
-TB-202312_to_202412_on_01-07_DM_HL
-TB-202312_to_202412_on_01-06B_DM_HL
-TB-202312_to_202412_on_01-06_DM_HL
-TB-202312_to_202412_on_01-05_DM_HL
-TB-202311_to_202411_on_12-05_DM_HL
-TB-202310_to_202410_on_11-11_DM_HL
-TB-202310_to_202410_on_11-05_DM_HL
-TB-202310_to_202410_on_11-05_DM_HL
-TB-202310_to_202410_on_11-04_DM_HL
-TB-202309_to_202409_on_10-04_DM_HL
-TB-202308_to_202408_on_09-06_DM
-TB-202407_to_202407_on_08-08_DM
-TB-202307_to_202407_on_08-08_DM
-TB-202306_to_202406_on_07-07_DM_HL
-TB-202305_to_202405_on_06-07_DM
-TB-202304_to_202404_on_05-08_DM
-TB-202304_to_202404_on_05-07_DM
-TB-202303_to_202403_on_04-05_DM
-TB-202302_to_202402_on_03-08_DM
-TB-202301_to_202401_on_02-12_DM
-TB-202301_to_202401_on_02-09_DM
-TB-202301_to_202401_on_02-08B_DM
-TB-202212_to_202312_on_01-18_BG // to test bug fix
-TB-202212_to_202312_on_01-09b_DM // This was after a bug fix and ran sprocs manually
-TB-202212_to_202312_on_01-04_DM_LR
-TB-202212_to_202312_on_01-03_DM_LR
-TB-202211_to_202311_on_12-12_DM_LR_JS
-TB-202211_to_202311_on_12-08_DM_LR_JS // time: 15:00, period 202311 was not closed
-TB-202210_to_202310_on_11-21_DM_GP_LR
-TB-202210_to_202310_on_11-20_DM_GP_LR
-TB-202210_to_202310_on_11-13_DM_GP_LR
-TB-202210_to_202310_on_11-07_DM_GP
-TB-202209_to_202309_on_10-24_DM_GP
-
-TB-202209_to_202309_on_10-18_DM_GP
-
-conda activate reports
-```
-
-## How to Install a Virtual Environment using Venv (USE CONDA TEST ONLY)
-
-Virtualenv is a tool to set up your Python environments. Since Python 3.3, a subset of it has been integrated into the standard library under the venv module. You can install venv to your host Python by running this command in your terminal:
-
-pip install virtualenv
-To use venv in your project, in your terminal, create a new project folder, cd to the project folder in your terminal, and run the following command:
-
-```bash
-# add env/ folder to gitignore
-conda deactivate
-pushd .
-cd ~/src/Reporting2/prod/volume/PipeLine
-# python3.8 -m venv env if multiple versions of python are installed using deadsnakes ppa
-python3 -m venv env
-source env/bin/activate
-pip install pyodbc
 ```
 
 ```bash
-# usage ./TrialBalance-test.sh "TB" "<bgroves@buschegroup.com>" "202201" "202301" 0 "once"
-
 # If start_period_update = 1 the AccountingStartPeriodUpdate script will run
 
 ./TrialBalance-test.sh "TB" "bgroves@buschegroup.com" "202405" "202505" 0 "once"

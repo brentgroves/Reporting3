@@ -144,15 +144,15 @@ dm=""
 line=""
 tm=""
 
-if [[ $result -eq 0 ]]
-then # if/then branch
-  script="AccountingYearCategoryType"
-  printf "\nStarting: $script\n" 
-  printf "\nStarting: $script\n" 1>&4
-  cd ../AccountingYearCategoryType
-  source AccountingYearCategoryType.sh 
-  printf "\n$script result=$result"
-fi
+# if [[ $result -eq 0 ]]
+# then # if/then branch
+#   script="AccountingYearCategoryType"
+#   printf "\nStarting: $script\n" 
+#   printf "\nStarting: $script\n" 1>&4
+#   cd ../AccountingYearCategoryType
+#   source AccountingYearCategoryType.sh 
+#   printf "\n$script result=$result"
+# fi
 
 # reset variables
 em=""
