@@ -31,8 +31,6 @@ try:
 %PROD%azure_dw = (sys.argv[10])
 
 %DEV%pcn_list = '123681'
-# %DEV%pcn_list = '123681,300758'
-    # # pcn_list = '123681,300758,310507,306766,300757'
 %DEV%username = 'mg.odbcalbion'
 %DEV%password = 'Mob3xalbion'
 %DEV%username2 = 'repsys1'

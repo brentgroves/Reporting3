@@ -13,7 +13,7 @@
 TIMEFORMAT='%R'; time ./AccountingPeriodRanges.py "$pcn_list" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
 # TIMEFORMAT='%R'; time ./AccountingAccount.py '123681,300758,310507,306766,300757' 1>&8 2>&7
 result=$?
-if [[ $result -eq 0 ]]
+if [[ $result -eq 0 || $result -eq 139 ]]
 then # if/then branch
   ../misc/script-end.py 4 0 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
 else

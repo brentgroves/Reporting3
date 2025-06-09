@@ -181,17 +181,17 @@ dm=""
 line=""
 tm=""
 
-if [[ $result -eq 0 || $result -eq 139 ]]
-then # if/then branch
-  exec 6<>tm-msg
-  read input <&6 && echo "$script time: ${input}" 1>&4
-  exec 6<>tm-msg
-  script="AccountingPeriod"
-  printf "\nStarting: $script\n" 1>&4
-  cd ../AccountingPeriod
-  source AccountingPeriod.sh 
-  printf "\n$script result=$result"
-fi
+# if [[ $result -eq 0 || $result -eq 139 ]]
+# then # if/then branch
+#   exec 6<>tm-msg
+#   read input <&6 && echo "$script time: ${input}" 1>&4
+#   exec 6<>tm-msg
+#   script="AccountingPeriod"
+#   printf "\nStarting: $script\n" 1>&4
+#   cd ../AccountingPeriod
+#   source AccountingPeriod.sh 
+#   printf "\n$script result=$result"
+# fi
 
 
 # reset variables
@@ -201,17 +201,17 @@ dm=""
 line=""
 tm=""
 
-# if [[ $result -eq 0 ]]
-# then # if/then branch
-#   exec 6<>tm-msg
-#   read input <&6 && echo "$script time: ${input}" 1>&4
-#   exec 6<>tm-msg
-#   script="AccountingPeriodRanges"
-#   printf "\nStarting: $script\n" 1>&4
-#   cd ../AccountingPeriodRanges
-#   source AccountingPeriodRanges.sh 
-#   printf "\n$script result=$result"
-# fi
+if [[ $result -eq 0 || $result -eq 139 ]]
+then # if/then branch
+  exec 6<>tm-msg
+  read input <&6 && echo "$script time: ${input}" 1>&4
+  exec 6<>tm-msg
+  script="AccountingPeriodRanges"
+  printf "\nStarting: $script\n" 1>&4
+  cd ../AccountingPeriodRanges
+  source AccountingPeriodRanges.sh 
+  printf "\n$script result=$result"
+fi
 
 # reset variables
 em=""
