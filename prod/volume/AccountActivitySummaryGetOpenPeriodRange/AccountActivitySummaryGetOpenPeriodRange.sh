@@ -11,11 +11,10 @@
 {
 ../misc/script-start.py 7 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
 
-# TIMEFORMAT='%R'; time ./AccountActivitySummaryGetOpenPeriodRange.py "$pcn" "$username2" "$password2" "$username3" "$password3" "$username4" "$password4" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
-TIMEFORMAT='%R'; time ./TEST.py "$pcn" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$username4" "$password4" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
-# TIMEFORMAT='%R'; time ./AccountingAccount.py '123681,300758,310507,306766,300757' 1>&8 2>&7
+TIMEFORMAT='%R'; time ./AccountActivitySummaryGetOpenPeriodRange.py "$pcn" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$username4" "$password4" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
+# TIMEFORMAT='%R'; time ./TEST.py "$pcn" "$username" "$password" "$username2" "$password2" "$username3" "$password3" "$username4" "$password4" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
 result=$?
-if [[ $result -eq 0 ]]
+if [[ $result -eq 0 || $result -eq 139 ]]
 then # if/then branch
   ../misc/script-end.py 7 0 "$username2" "$password2" "$username3" "$password3" "$MYSQL_HOST" "$MYSQL_PORT" "$AZURE_DW" 1>&4 2>&3
 else

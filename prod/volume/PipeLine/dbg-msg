@@ -5,25 +5,29 @@ $3: 202405
 $4: 202505
 $5: 0
 $6: once
-Starting: AccountingBalanceAppendPeriodRange
-script-start.py: current_time='18:10:45'
+Starting: AccountActivitySummaryGetOpenPeriodRange
+script-start.py: current_time='18:26:18'
 script-start.py: point 1
-script-start.py: point 2: script_key=6
+script-start.py: point 2: script_key=7
 script-start.py: point 10
-script-start.py: total time: 0:00:00.566279
+script-start.py: total time: 0:00:00.580027
 script-start.py: point 99
-AccountingBalanceAppendPeriodRange.py: Current Time: current_time='18:10:46'
-AccountingBalanceAppendPeriodRange.py: call sproc123681_11728751_2112421 - len=1
-AccountingBalanceAppendPeriodRange.py: call sproc123681_11728751_2112421 - messages=[]
-AccountingBalanceAppendPeriodRange.py: fetch_time=0:00:01.826906
-AccountingBalanceAppendPeriodRange.py: call sproc300758_11728751_2000117 - len=3080
-AccountingBalanceAppendPeriodRange.py: call sproc300758_11728751_2000117 - messages=[]
-AccountingBalanceAppendPeriodRange.py: fetch_time=0:00:05.304306
-AccountingBalanceAppendPeriodRange.py: call Plex.accounting_balance_delete_period_range - messages=[]
-AccountingBalanceAppendPeriodRange.py: total time: 0:00:06.558257
-script-end.py: current_time='18:10:53'
+AccountActivitySummaryGetOpenPeriodRange.py: Current Time: current_time='18:26:19'
+AccountActivitySummaryGetOpenPeriodRange.py: call sproc123681_11728751_2112421 - len=1
+AccountActivitySummaryGetOpenPeriodRange.py: call sproc123681_11728751_2112421 - messages=[]
+AccountActivitySummaryGetOpenPeriodRange.py: fetch_time=0:00:02.825936
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - rowcount=2223
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - messages=[]
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - rowcount=2693
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - messages=[]
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - rowcount=2223
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - messages=[]
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - rowcount=2693
+AccountActivitySummaryGetOpenPeriodRange.py: delete from Plex.account_activity_summary - messages=[]
+AccountActivitySummaryGetOpenPeriodRange.py: total time: 0:00:17.687633
+script-end.py: current_time='18:26:38'
 script-end.py: point 1
-script-end.py: point 2: script_key=6
+script-end.py: point 2: script_key=7
 script-end.py: point 10
-script-end.py: total time: 0:00:00.505837
+script-end.py: total time: 0:00:00.545566
 script-end.py: point 99
