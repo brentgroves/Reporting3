@@ -5,6 +5,9 @@
     },
     {
       "path": "../odbctest"
+    },
+    {
+      "path": "../repsys"
     }
   ]
 }
