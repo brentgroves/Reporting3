@@ -5,25 +5,27 @@ $3: 202405
 $4: 202505
 $5: 0
 $6: once
-Starting: AccountPeriodBalanceRecreatePeriodRange
-script-start.py: current_time='16:56:51'
+Starting: AccountPeriodBalanceRecreateOpenPeriodRange
+script-start.py: current_time='19:51:42'
 script-start.py: point 1
-script-start.py: point 2: script_key=117
+script-start.py: point 2: script_key=8
 script-start.py: point 10
-script-start.py: total time: 0:00:00.552073
+script-start.py: total time: 0:00:00.556616
 script-start.py: point 99
-AccountPeriodBalanceRecreatePeriodRange.py: Current Time: 16:56:51
-AccountPeriodBalanceRecreatePeriodRange.py: Point 1
-AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_delete_period_range - rowcount=0
-AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_delete_period_range - messages=[]
-AccountPeriodBalanceRecreatePeriodRange.py: Point 2
-AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_recreate_period_range - rowcount=-1
-AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_recreate_period_range - messages=[]
-AccountPeriodBalanceRecreatePeriodRange.py: Point 3
-AccountPeriodBalanceRecreatePeriodRange.py: total time: 0:00:09.524339
-script-end.py: current_time='16:57:01'
+AccountPeriodBalanceRecreateOpenPeriodRange.py: Current Time: 19:51:42
+AccountPeriodBalanceRecreateOpenPeriodRange.py: point 1
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - rowcount=0
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - messages=[]
+AccountPeriodBalanceRecreateOpenPeriodRange.py: point 2
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - rowcount=-1
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - messages=[]
+AccountPeriodBalanceRecreateOpenPeriodRange.py: point 3
+AccountPeriodBalanceRecreateOpenPeriodRange.py: point 4
+AccountPeriodBalanceRecreateOpenPeriodRange.py: total time: 0:00:03.965952
+AccountPeriodBalanceRecreateOpenPeriodRange.py: point 99
+script-end.py: current_time='19:51:46'
 script-end.py: point 1
-script-end.py: point 2: script_key=117
+script-end.py: point 2: script_key=8
 script-end.py: point 10
-script-end.py: total time: 0:00:00.566073
+script-end.py: total time: 0:00:00.558106
 script-end.py: point 99

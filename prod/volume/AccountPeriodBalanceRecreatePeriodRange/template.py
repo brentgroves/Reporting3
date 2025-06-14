@@ -42,8 +42,6 @@ try:
   current_time = start_time.strftime("%H:%M:%S")
   print_to_stdout(f"Current Time: {current_time}")
 
-
-  # https://www.pythonfixing.com/2022/02/fixed-how-to-set-db-connection-timeout.html
   conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=repsys1',timeout=30)
   cursor2 = conn2.cursor()
 

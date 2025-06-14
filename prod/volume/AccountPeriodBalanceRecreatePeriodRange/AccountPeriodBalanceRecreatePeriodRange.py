@@ -42,25 +42,19 @@ try:
   current_time = start_time.strftime("%H:%M:%S")
   print_to_stdout(f"Current Time: {current_time}")
 
-
-  # https://www.pythonfixing.com/2022/02/fixed-how-to-set-db-connection-timeout.html
   conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=repsys1',timeout=30)
   cursor2 = conn2.cursor()
-  print_to_stdout(f"Point 1")
 
   rowcount=cursor2.execute("{call Plex.account_period_balance_delete_period_range (?)}",pcn).rowcount
   print_to_stdout(f"call Plex.account_period_balance_delete_period_range - rowcount={rowcount}")
   print_to_stdout(f"call Plex.account_period_balance_delete_period_range - messages={cursor2.messages}")
   cursor2.commit()
-  print_to_stdout(f"Point 2")
-
 
   rowcount=cursor2.execute("{call Plex.account_period_balance_recreate_period_range (?)}",pcn).rowcount
   print_to_stdout(f"call Plex.account_period_balance_recreate_period_range - rowcount={rowcount}")
   print_to_stdout(f"call Plex.account_period_balance_recreate_period_range - messages={cursor2.messages}")
   cursor2.commit()
   cursor2.close()
-  print_to_stdout(f"Point 3")
 
 except pyodbc.Error as ex:
   ret = 1
