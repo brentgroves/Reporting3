@@ -8,6 +8,15 @@
     },
     {
       "path": "../repsys"
+    },
+    {
+      "path": "../odbc"
+    },
+    {
+      "path": "../backups"
+    },
+    {
+      "path": "../../dotfiles"
     }
   ]
 }
