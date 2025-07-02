@@ -1,3 +1,2 @@
-Installed 1 package in 5ms
-Installed 1 package in 2ms
-Installed 1 package in 2ms
+script-start.py: [HYT00] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0) (SQLDriverConnect)
+AccountingYearCategoryType.py: [HYT00] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0) (SQLDriverConnect)

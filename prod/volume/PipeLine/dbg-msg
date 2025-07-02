@@ -1,31 +1,31 @@
 
 $1: TB
 $2: bgroves@buschegroup.com
-$3: 202405
-$4: 202505
+$3: 202406
+$4: 202506
 $5: 0
 $6: once
-Starting: AccountPeriodBalanceRecreateOpenPeriodRange
-script-start.py: current_time='19:51:42'
-script-start.py: point 1
-script-start.py: point 2: script_key=8
+Starting: AccountingYearCategoryType
+script-start.py: current_time='19:35:57'
 script-start.py: point 10
-script-start.py: total time: 0:00:00.556616
+script-start.py: total time: 0:00:15.129850
 script-start.py: point 99
-AccountPeriodBalanceRecreateOpenPeriodRange.py: Current Time: 19:51:42
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 1
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - rowcount=0
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - messages=[]
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 2
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - rowcount=-1
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - messages=[]
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 3
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 4
-AccountPeriodBalanceRecreateOpenPeriodRange.py: total time: 0:00:03.965952
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 99
-script-end.py: current_time='19:51:46'
+AccountingYearCategoryType.py: 19:36:12
+AccountingYearCategoryType.py: point 1
+AccountingYearCategoryType.py: point 2
+AccountingYearCategoryType.py: point 3: rowcount=-1
+AccountingYearCategoryType.py: point 4
+AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - rowcount=-1
+AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - messages=[]
+AccountingYearCategoryType.py: fetch_time=0:00:02.689319
+AccountingYearCategoryType.py: point 4
+AccountingYearCategoryType.py: rows=4919
+AccountingYearCategoryType.py: point 30
+AccountingYearCategoryType.py: total time: 0:00:17.813477
+AccountingYearCategoryType.py: point 39: ret=1
+script-end.py: current_time='19:36:31'
 script-end.py: point 1
-script-end.py: point 2: script_key=8
+script-end.py: point 2: script_key=3
 script-end.py: point 10
-script-end.py: total time: 0:00:00.558106
+script-end.py: total time: 0:00:12.760850
 script-end.py: point 99

@@ -61,7 +61,7 @@ TB-202402_to_202502_on_03-04_DM_HL
 ```bash
 # If start_period_update = 1 the AccountingStartPeriodUpdate script will run
 
-./TrialBalance-test.sh "TB" "bgroves@buschegroup.com" "202405" "202505" 0 "once"
+./TrialBalance-test.sh "TB" "bgroves@buschegroup.com" "202406" "202506" 0 "once"
 ```
 
 ## run dbeaver
