@@ -1,5 +1,9 @@
 # run tb
 
+## issue
+
+If the plex snapshot gets updated just after we run the /AccountingPeriodRanges script the scripts will fail because we are deleting a different range than we are adding.
+
 ## **Format of file name**
 
 "Heather Luttrell" <Heather.Luttrell@Linamar.com>
