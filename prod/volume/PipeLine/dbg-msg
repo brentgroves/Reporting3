@@ -5,27 +5,23 @@ $3: 202406
 $4: 202506
 $5: 0
 $6: once
-Starting: AccountPeriodBalanceRecreateOpenPeriodRange
-script-start.py: current_time='20:29:27'
+Starting: AccountingPeriodRanges
+script-start.py: current_time='18:49:34'
 script-start.py: point 1
-script-start.py: point 2: script_key=8
+script-start.py: point 2: script_key=4
 script-start.py: point 10
-script-start.py: total time: 0:00:00.437997
+script-start.py: total time: 0:00:00.464151
 script-start.py: point 99
-AccountPeriodBalanceRecreateOpenPeriodRange.py: Current Time: 20:29:27
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 1
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - rowcount=4916
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - messages=[]
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 2
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - rowcount=-1
-AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - messages=[]
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 3
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 4
-AccountPeriodBalanceRecreateOpenPeriodRange.py: total time: 0:00:06.161084
-AccountPeriodBalanceRecreateOpenPeriodRange.py: point 99
-script-end.py: current_time='20:29:34'
+AccountingPeriodRanges.py: Current Time: 18:49:35
+AccountingPeriodRanges.py: call sproc123681_11728751_2112421 - rowcount=<pyodbc.Cursor object at 0x71402a633430>
+AccountingPeriodRanges.py: call sproc123681_11728751_2112421 - messages=[]
+AccountingPeriodRanges.py: fetch_time=0:00:02.618947
+AccountingPeriodRanges.py: delete from Plex.accounting_period_ranges where pcn in (123681) - rowcount=1
+AccountingPeriodRanges.py: delete from Plex.accounting_period_ranges where pcn in (123681) - messages=[]
+AccountingPeriodRanges.py: total time: 0:00:03.197506
+script-end.py: current_time='18:49:39'
 script-end.py: point 1
-script-end.py: point 2: script_key=8
+script-end.py: point 2: script_key=4
 script-end.py: point 10
-script-end.py: total time: 0:00:00.381634
+script-end.py: total time: 0:00:00.428431
 script-end.py: point 99
