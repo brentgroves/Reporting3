@@ -1,11 +1,5 @@
 {
-	"folders": [
-    {
-      "path": "."
-    },
-    {
-      "path": "../odbctest"
-    },
+  "folders": [
     {
       "path": "../repsys"
     },
@@ -16,13 +10,17 @@
       "path": "../backups"
     },
     {
-      "path": "../../dotfiles"
-    },
-    {
       "path": "../secrets"
     },
     {
       "path": "../azure"
+    },
+    {
+      "path": "../qemu"
     }
+  ],
+  "settings": {},
+  "markdown.styles": [
+    "style.css"
   ]
 }

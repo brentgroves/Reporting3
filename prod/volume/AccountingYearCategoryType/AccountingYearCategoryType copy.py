@@ -90,46 +90,46 @@ try:
   next_year = todays_date.year + 1
 
 
-  # conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=repsys1')
-  # print_to_stdout(f"point 5")
+  conn2 = pyodbc.connect('DSN=repsys1;UID='+username2+';PWD='+ password2 + ';DATABASE=repsys1')
+  print_to_stdout(f"point 5")
 
-  # cursor2 = conn2.cursor()
-  # print_to_stdout(f"point 6")
+  cursor2 = conn2.cursor()
+  print_to_stdout(f"point 6")
 
-  # del_command = f'''delete from Plex.accounting_account_year_category_type 
-  # where year between {this_year} and {next_year} 
-  # and pcn in ({pcn_list})'''
+  del_command = f'''delete from Plex.accounting_account_year_category_type 
+  where year between {this_year} and {next_year} 
+  and pcn in ({pcn_list})'''
 
-  # print_to_stdout(f"point 7: del_command={del_command}")
+  print_to_stdout(f"point 7: del_command={del_command}")
 
-  # rowcount=cursor2.execute(del_command).rowcount
-  # print_to_stdout(f"point 8")
+  rowcount=cursor2.execute(del_command).rowcount
+  print_to_stdout(f"point 8")
 
-  # print_to_stdout(f"{del_command} - rowcount={rowcount}")
-  # print_to_stdout(f"{del_command} - messages={cursor2.messages}")
-  # cursor2.commit()
-  # print_to_stdout(f"point 9")
+  print_to_stdout(f"{del_command} - rowcount={rowcount}")
+  print_to_stdout(f"{del_command} - messages={cursor2.messages}")
+  cursor2.commit()
+  print_to_stdout(f"point 9")
 
-  # im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
-  # values (?,?,{this_year},?,?)''' 
-  # print_to_stdout(f"point 10: im2={im2}")
+  im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
+  values (?,?,{this_year},?,?)''' 
+  print_to_stdout(f"point 10: im2={im2}")
 
-  # cursor2.fast_executemany = True
-  # cursor2.executemany(im2,insertObject)
-  # cursor2.commit()
+  cursor2.fast_executemany = True
+  cursor2.executemany(im2,insertObject)
+  cursor2.commit()
 
-  # im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
-  # values (?,?,{next_year},?,?)''' 
-  # print_to_stdout(f"point 11: im2={im2}")
+  im2=f'''insert into Plex.accounting_account_year_category_type (pcn,account_no,[year],category_type,revenue_or_expense) 
+  values (?,?,{next_year},?,?)''' 
+  print_to_stdout(f"point 11: im2={im2}")
 
-  # cursor2.fast_executemany = True
-  # cursor2.executemany(im2,insertObject)
-  # cursor2.commit()
-  # print_to_stdout(f"point 12")
+  cursor2.fast_executemany = True
+  cursor2.executemany(im2,insertObject)
+  cursor2.commit()
+  print_to_stdout(f"point 12")
 
 
-  # cursor2.close()
-  # print_to_stdout(f"point 20")
+  cursor2.close()
+  print_to_stdout(f"point 20")
 
 except pyodbc.Error as ex:
   ret = 1
